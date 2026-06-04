@@ -7,7 +7,8 @@ let users = require("./usersdb.js");
 const public_users = express.Router();
 
 
-// Register new user
+// Registers a new user if the username and password are provided
+// and the username does not already exist.
 public_users.post("/register", (req, res) => {
   const { username, password } = req.body;
 
@@ -33,13 +34,13 @@ public_users.post("/register", (req, res) => {
 });
 
 
-// Task 1 - Get all books
+// Retrieves the complete list of books available in the store.
 public_users.get("/", function (req, res) {
   return res.status(200).send(JSON.stringify(books, null, 4));
 });
 
 
-// Task 2 - Get book by ISBN
+// Retrieves the details of one book using the ISBN from the request parameters.
 public_users.get("/isbn/:isbn", function (req, res) {
   const isbn = req.params.isbn;
 
@@ -53,7 +54,7 @@ public_users.get("/isbn/:isbn", function (req, res) {
 });
 
 
-// Task 3 - Get books by author
+// Retrieves all books written by the author provided in the request parameters.
 public_users.get("/author/:author", function (req, res) {
   const author = req.params.author.toLowerCase();
   const result = {};
@@ -74,7 +75,7 @@ public_users.get("/author/:author", function (req, res) {
 });
 
 
-// Task 4 - Get books by title
+// Retrieves all books that match the title provided in the request parameters.
 public_users.get("/title/:title", function (req, res) {
   const title = req.params.title.toLowerCase();
   const result = {};
@@ -95,7 +96,7 @@ public_users.get("/title/:title", function (req, res) {
 });
 
 
-// Task 5 - Get book review
+// Retrieves the reviews of a book using the ISBN from the request parameters.
 public_users.get("/review/:isbn", function (req, res) {
   const isbn = req.params.isbn;
 
@@ -109,10 +110,11 @@ public_users.get("/review/:isbn", function (req, res) {
 });
 
 
-// Task 10 - Get all books using async/await with Axios
+// Retrieves the complete list of books by making an HTTP request with Axios.
 public_users.get("/async/books", async function (req, res) {
   try {
     const response = await axios.get("http://localhost:5000/");
+
     return res.status(200).send(
       typeof response.data === "string"
         ? response.data
@@ -126,7 +128,7 @@ public_users.get("/async/books", async function (req, res) {
 });
 
 
-// Task 11 - Get book by ISBN using async/await with Axios
+// Retrieves a single book using the ISBN provided in the request parameters.
 public_users.get("/async/isbn/:isbn", async function (req, res) {
   try {
     const isbn = encodeURIComponent(req.params.isbn);
@@ -145,7 +147,7 @@ public_users.get("/async/isbn/:isbn", async function (req, res) {
 });
 
 
-// Task 12 - Get books by author using async/await with Axios
+// Retrieves books written by the author provided in the request parameters.
 public_users.get("/async/author/:author", async function (req, res) {
   try {
     const author = encodeURIComponent(req.params.author);
@@ -164,7 +166,7 @@ public_users.get("/async/author/:author", async function (req, res) {
 });
 
 
-// Task 13 - Get books by title using async/await with Axios
+// Retrieves books that match the title provided in the request parameters.
 public_users.get("/async/title/:title", async function (req, res) {
   try {
     const title = encodeURIComponent(req.params.title);
